@@ -1,17 +1,37 @@
-import {useState} from 'react'
-import Button from './components/button'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
-function App() {
-  const [counter, setCounter] = useState(5);
+import CounterPage from './pages/CounterPage'
+import CalculatorPage from './pages/CalculatorPage'
+import HomePage from './pages/HomePage'
 
+
+const App = () => {
+  
   return (
-    <div>
-     <h1>{counter}</h1>
-     <div>
-       <Button text="increase" onClick={() => setCounter(counter +1)} />
-       <Button text="decrease" onClick={() => setCounter(counter -1)} />
-     </div>
-    </div>
+    // <div>
+    //   <CounterPage />
+    //   <CalculatorPage />
+    // </div>
+
+    <Router>
+    
+      <Switch>
+        <Route path="/counter">
+          <CounterPage />
+        </Route>
+        <Route path="/calculator">
+          <CalculatorPage />
+        </Route>
+        <Route path="/">
+          <HomePage />
+        </Route>
+      </Switch>
+    
+  </Router>
   );
 }
 
