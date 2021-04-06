@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Button from '../../components/Button'
 import {Typography, Button} from '@material-ui/core/'
 
 const CounterPage = () => {
