@@ -20,15 +20,14 @@ const App = () => {
       <Navbar />
       <Container>
         <Typography align="center">
-
           <Switch>
-            <Route path="/counter">
+            <Route exact path="/counter">
               <CounterPage />
             </Route>
-            <Route path="/calculator">
+            <Route exact path="/calculator">
               <CalculatorPage />
             </Route>
-            <Route path="/">
+            <Route exact path="/">
               <HomePage />
             </Route>
           </Switch>
