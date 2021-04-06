@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {Typography, Button} from '@material-ui/core/'
+import { Typography, Button } from '@material-ui/core';
 
 const CounterPage = () => {
   const [counter, setCounter] = useState(5);
@@ -12,11 +12,11 @@ const CounterPage = () => {
       <Typography variant="h3" component="h1">Counter Page</Typography>
       <Typography variant="h3" component="h2">{counter}</Typography>
       <div>
-        <Button handleClick={incCounter} variant="contained" color="primary">Increase</Button>
-        <Button handleClick={decCounter} variant="contained" color="primary">Decrease</Button>
+        <Button onClick={incCounter} variant="contained" color="primary">Increase</Button>
+        <Button onClick={decCounter} variant="contained" color="primary">Decrease</Button>
       </div>
     </div>
   );
-}
+};
 
 export default CounterPage;

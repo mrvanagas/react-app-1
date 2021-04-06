@@ -4,6 +4,7 @@ import {
   Route
 } from "react-router-dom";
 
+import Navbar from './components/navbar'
 import CounterPage from './pages/CounterPage'
 import CalculatorPage from './pages/CalculatorPage'
 import HomePage from './pages/HomePage'
@@ -15,12 +16,8 @@ Container
 const App = () => {
 
   return (
-    // <div>
-    //   <CounterPage />
-    //   <CalculatorPage />
-    // </div>
-
     <Router>
+      <Navbar />
       <Container>
         <Typography align="center">
 
