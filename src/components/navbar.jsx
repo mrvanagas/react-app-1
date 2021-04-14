@@ -33,9 +33,9 @@ const Navbar = () => {
           </Box>
 
           <Box>
-          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/">Login</NavLink>
-          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/counter">Register</NavLink>
-          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/calculator">Forgot password</NavLink>
+          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/login">Login</NavLink>
+          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/register">Register</NavLink>
+          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/forgotpw">Forgot password</NavLink>
           </Box>
         </Box>
 

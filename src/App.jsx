@@ -9,6 +9,9 @@ import CounterPage from './pages/CounterPage';
 import CalculatorPage from './pages/CalculatorPage';
 import MaterialUIPage from './pages/MaterialUIPage';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import ForgotPW from './pages/ForgotPWPage'
 
 const App = () => {
 
@@ -27,6 +30,15 @@ const App = () => {
         </Route>
         <Route exact path="/">
           <HomePage />
+        </Route>
+        <Route exact path="/login">
+          <LoginPage />
+        </Route>
+        <Route exact path="/register">
+          <RegisterPage />
+        </Route>
+        <Route exact path="/forgotpw">
+          <ForgotPW />
         </Route>
       </Switch>
     </Router>
