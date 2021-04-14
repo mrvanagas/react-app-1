@@ -1,15 +1,16 @@
-import { Box,Container } from '@material-ui/core';
-import Form from './Form'
+  
+import { Container, Box } from '@material-ui/core';
+import Form from './Form';
 
-const ForgotPW = () => {
+const ForgotPasswordPage = () => {
   return (
     <Container>
-      <Box mt={3}>
+      <Box my={8}>
         <Form />
       </Box>
 
     </Container>
   )
-}
+};
 
-export default ForgotPW;
+export default ForgotPasswordPage;

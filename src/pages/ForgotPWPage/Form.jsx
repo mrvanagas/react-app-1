@@ -1,63 +1,47 @@
-import { useState } from 'react'
-import {
-    Typography,
-    Paper,
-    makeStyles,
-    Box,
-    TextField,
-    Button
-} from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '500px',
-        margin: 'auto',
-        textAlign: 'center'
-    }
-}));
+import { useState } from 'react';
+import TextField from '@material-ui/core/TextField';
+import AuthForm from '../../components/AuthForm';
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const isEmail = (value) => emailRegex.test(String(value).toLowerCase());
+const isEmail = (value) => emailRegex.test(value.toLowerCase());
 
 const Form = () => {
-    const classes = useStyles();
-    const [email, setEmail] = useState('');
-    const [emailError, setEmailError] = useState(undefined);
-    
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        if(isEmail(email)){
-            //ka daryt jei gerai
-            setEmailError(undefined)
-        } else {
-            //klaidu formavimas
-            setEmailError('bad email')
-        }
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState(undefined);
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (isEmail(email)) {
+      setEmailError(undefined);
+      // ka daryt jei viskas gerai
+    } else {
+      setEmailError('Not an email');
     }
+  }
 
-    return (
-        <form classes={classes.root} onSubmit={handleSubmit}>
-            <Paper elevation={4}>
-                <Box p={3}>
-                    <Typography variant="h4" component="h1" gutterBottom>Forgotten Password</Typography>
-                    <TextField
-                        label="email"
-                        variant="outlined"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        fullWidth
-                        required 
-                        error={emailError}
-                        helperText={emailError ?? false}
-                        />
-                    <Box mt={3}>
-                        <Button variant="contained" color="primary" type="submit">Send password reset</Button>
-                    </Box>
-                </Box>
-            </Paper>
-        </form>
-    )
+  return (
+    <AuthForm
+      title="Forgot password"
+      submitText="Send password reset link"
+      onSubmit={handleSubmit}
+      links={[
+        { to: '/login', text: 'Login' },
+        { to: '/register', text: 'Register' },
+      ]}
+    >
+      <TextField
+        label="Email"
+        variant="outlined"
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        fullWidth
+        required
+        error={emailError}
+        helperText={emailError ?? false}
+        size="small"
+      />
+    </AuthForm>
+  )
 }
 
 export default Form
