@@ -1,11 +1,13 @@
-import { Box, Typography, Container } from '@material-ui/core';
+import { Box,Container } from '@material-ui/core';
+import Form from './Form'
 
 const ForgotPW = () => {
   return (
     <Container>
-      <Box mt={4}>
-        <Typography variant="h3" component="h1">Forgotten Password</Typography>
+      <Box mt={3}>
+        <Form />
       </Box>
+
     </Container>
   )
 }
