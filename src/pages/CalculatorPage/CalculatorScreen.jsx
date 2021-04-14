@@ -1,29 +1,36 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Box } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
     margin: 'auto',
     width: '100%',
-    height: '50px',
-    lineHeight: '50px',
+    height: '80px',
     textAlign: 'right',
-    paddingRight: '1rem',
+    padding: '0.25rem 1rem',
     fontWeight: '600',
-    fontSize: '1.5rem',
     backgroundColor: theme.palette.common.white,
-    color: theme.palette.primary.main
+  },
+  fullOutput: {
+    height: '30px',
+    fontSize: '1.25rem',
+    color: theme.palette.grey[500],
+  },
+  tempOutput: {
+    height: '40px',
+    color: theme.palette.primary.main,
+    fontSize: '1.6rem',
   }
-
 }));
 
-const CalculatorScreen = () => {
+const CalculatorScreen = ({ fullOutput, tempOutput }) => {
 
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      
-    </div>
-  )
+    <Box className={classes.root}>
+      <Box className={classes.fullOutput}>{fullOutput}</Box>
+      <Box className={classes.tempOutput}>{tempOutput}</Box>
+    </Box>
+  );
 }
 
 export default CalculatorScreen
