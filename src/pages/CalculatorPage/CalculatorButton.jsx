@@ -1,6 +1,6 @@
 import { makeStyles, Button } from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: ({ xSpan, ySpan }) => ({
     fontSize: '1.5rem',
     gridColumn: `span ${xSpan}`,
@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   disabled: {
     backgroundColor: 'red'
   }
-}));
+});
 
 const CalculatorButton = ({ children, xSpan = 1, ySpan = 1, disabled, onClick }) => {
   const classes = useStyles({ xSpan, ySpan });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Container, makeStyles } from '@material-ui/core';
+import { AppBar, Toolbar, Container, makeStyles, Box } from '@material-ui/core';
 import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
@@ -23,10 +23,22 @@ const Navbar = () => {
     <AppBar position="static">
       <Container>
         <Toolbar disableGutters>
+        <Box display="flex" justifyContent="space-between" width="100%">
+
+          <Box>
           <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/">Home</NavLink>
           <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/counter">Counter</NavLink>
           <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/calculator">Calculator</NavLink>
           <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/material-ui">Material-ui</NavLink>
+          </Box>
+
+          <Box>
+          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/">Login</NavLink>
+          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/counter">Register</NavLink>
+          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/calculator">Forgot password</NavLink>
+          </Box>
+        </Box>
+
         </Toolbar>
       </Container>
     </AppBar>
