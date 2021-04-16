@@ -23,21 +23,20 @@ const Navbar = () => {
     <AppBar position="static">
       <Container>
         <Toolbar disableGutters>
-        <Box display="flex" justifyContent="space-between" width="100%">
-
-          <Box>
-          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/">Home</NavLink>
-          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/counter">Counter</NavLink>
-          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/calculator">Calculator</NavLink>
-          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/material-ui">Material-ui</NavLink>
+          <Box display="flex" justifyContent="space-between" width="100%">
+            <Box>
+              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/">Home</NavLink>
+              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/counter">Counter</NavLink>
+              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/calculator">Calculator</NavLink>
+              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/material-ui">Material-ui</NavLink>
+              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/course-registration">Course registration</NavLink>
+            </Box>
+            <Box>
+              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/login">Login</NavLink>
+              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/register">Register</NavLink>
+              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/forgot-password">Forgot password</NavLink>
+            </Box>
           </Box>
-
-          <Box>
-          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/login">Login</NavLink>
-          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/register">Register</NavLink>
-          <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/forgotpw">Forgot password</NavLink>
-          </Box>
-        </Box>
 
         </Toolbar>
       </Container>

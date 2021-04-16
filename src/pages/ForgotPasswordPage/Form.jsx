@@ -39,9 +39,10 @@ const Form = () => {
         error={emailError}
         helperText={emailError ?? false}
         size="small"
+        type="email"
       />
     </AuthForm>
   )
 }
 
-export default Form
+export default Form;

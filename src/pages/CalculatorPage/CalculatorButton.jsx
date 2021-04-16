@@ -5,10 +5,7 @@ const useStyles = makeStyles({
     fontSize: '1.5rem',
     gridColumn: `span ${xSpan}`,
     gridRow: `span ${ySpan}`,
-  }),
-  disabled: {
-    backgroundColor: 'red'
-  }
+  })
 });
 
 const CalculatorButton = ({ children, xSpan = 1, ySpan = 1, disabled, onClick }) => {

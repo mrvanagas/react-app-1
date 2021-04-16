@@ -1,0 +1,36 @@
+Sukurti puslapį kurti CodeAcademy kursų registracijai
+Reikiami laukai:
+  *vardas: 
+    tekstas
+
+  *pavardė: 
+    tekstas
+
+  *paštas: 
+    el. paštas
+  
+  tel. numeris:
+    lietuviškas telefono numeris
+
+  Pažymėti kursus kuriuos jau esate praėję:
+     turi būti galimybė pažymėti bet kokį kiekį kursų, kuriuos siūlo akademija
+
+  *Pasirinkti vietą:
+    -
+    Lokacijų atvaizdavimui naudoti masyvą locations
+    -
+    turi būti galimybė pažymėti bet kokį kiekį lokacijų [Vilnius, Kaunas, Klaipėda, Nuotolinis]
+
+Įgalinti tokį funkcionalumą:  
+  -
+  Kursų atvaizdavimui naudoti masyvą courses
+  -
+  * pasirinkus lokaciją (arba kelias lokacijas), rodome jame galimus kursus, tuomet
+    * Turime galėti pažymėti tuos kursus, į kuriuos galime eiti (nereikia būt baigus kitų kursų)
+      Kiti kursai irgi turi būti atvaizduojami, tačiau jų pažymėti turi būti negalima ( papilkintas stilius, paspaudus nieks nevyksta)
+
+    * Pažymėjus vieną (ar kelis) iš kursų, turi atsinaujinti galimų kursų pasirinkimas
+
+  
+
+  

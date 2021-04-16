@@ -44,7 +44,6 @@ const useStyles = makeStyles(theme => {
     }
   }
 });
-
 const calcActions = {
   '+': (a, b) => a + b,
   '-': (a, b) => a - b,
@@ -119,7 +118,10 @@ const Calculator = () => {
             setFullOutput(fullOutput + tempOutputBase + action.payload.sign);
             break;
           }
-          default: setFullOutput('0' + action.payload.sign); break;
+          default:
+            setFullOutput('0' + action.payload.sign);
+            setTempResult('0');
+            break;
         }
         break;
 
@@ -138,6 +140,7 @@ const Calculator = () => {
               }
               const res = calcNumOpNum(tempResult, operator, tempOutput);
               setTempOutput(res);
+              setTempResult(res);
             }
             setFullOutput(fullOutput + tempOutput + '=');
             actions.splice(0, actions.length);
@@ -153,13 +156,22 @@ const Calculator = () => {
               }
               const res = calcNumOpNum(tempResult, operator, tempOutputBase);
               setTempOutput(res);
+              setTempResult(res);
             }
             setFullOutput(fullOutput + tempOutputBase + '=');
             actions.splice(0, actions.length);
             break;
           case OPERATOR:
             const _tempOutput = tempOutput === '' ? '0' : tempOutput;
-            if (lastAction.payload.operator === '/' && _tempOutput === '0') handleDivisionByZero('Result is undefined');
+            const operator = lastAction.payload.operator;
+            if (lastAction.payload.operator === '/' && _tempOutput === '0') {
+              handleDivisionByZero('Result is undefined');
+              break;
+            }
+            const res = calcNumOpNum(tempResult, operator, _tempOutput);
+            setFullOutput(fullOutput + _tempOutput + '=');
+            setTempOutput(res);
+            setTempResult(res);
             break;
           default: break;
         }
@@ -173,10 +185,7 @@ const Calculator = () => {
         break;
 
       case CLEAR:
-        if (dividedByZero) {
-          reset();
-          break;
-        }
+        reset();
         setActions([]);
         break;
 

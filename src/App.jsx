@@ -9,9 +9,10 @@ import CounterPage from './pages/CounterPage';
 import CalculatorPage from './pages/CalculatorPage';
 import MaterialUIPage from './pages/MaterialUIPage';
 import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import ForgotPW from './pages/ForgotPWPage'
+import CourseRegistrationPage from './pages/CourseRegistrationPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 const App = () => {
 
@@ -28,8 +29,8 @@ const App = () => {
         <Route exact path="/material-ui">
           <MaterialUIPage />
         </Route>
-        <Route exact path="/">
-          <HomePage />
+        <Route exact path="/course-registration">
+          <CourseRegistrationPage />
         </Route>
         <Route exact path="/login">
           <LoginPage />
@@ -37,8 +38,11 @@ const App = () => {
         <Route exact path="/register">
           <RegisterPage />
         </Route>
-        <Route exact path="/forgotpw">
-          <ForgotPW />
+        <Route exact path="/forgot-password">
+          <ForgotPasswordPage />
+        </Route>
+        <Route exact path="/">
+          <HomePage />
         </Route>
       </Switch>
     </Router>
@@ -46,4 +50,3 @@ const App = () => {
 }
 
 export default App;
-

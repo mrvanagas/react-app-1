@@ -1,13 +1,14 @@
-import { Box, Typography, Container } from '@material-ui/core';
+import { Container, Box } from '@material-ui/core';
+import Form from './Form';
 
 const RegisterPage = () => {
   return (
     <Container>
-      <Box mt={4}>
-        <Typography variant="h3" component="h1">Register Page</Typography>
+      <Box my={8}>
+        <Form />
       </Box>
     </Container>
   )
-}
+};
 
 export default RegisterPage;
