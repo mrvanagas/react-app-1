@@ -224,6 +224,16 @@ const Calculator = () => {
 
   return (
     <ThemeProvider theme={theme}>
+        <h3>TODO</h3>
+        <ul>
+          <li>OPERATOR after EQUAL</li>
+          <li>NUMBER after EQUAL</li>
+          <li>DOT after EQUAL</li>
+          <li>EQUAL after EQUAL</li>
+          <li>BACKSPACE after EQUAL</li>
+          <li>CalculatorButton component mapping</li>
+          <li>DRY: Equivalent code extraction to functions</li>
+        </ul>
       <Box className={classes.root}>
         <CalculatorScreen fullOutput={fullOutput} tempOutput={tempOutput} />
         <Box className={classes.btnGrid}>

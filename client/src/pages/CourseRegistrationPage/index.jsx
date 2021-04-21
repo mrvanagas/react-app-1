@@ -5,9 +5,11 @@ import {
   Typography,
   Paper,
   Divider,
+  Grid
 } from '@material-ui/core';
-import CourseFilters from './CourseFilters';
 import InfoPanel from './InfoPanel';
+import LocationFilter from './LocationFilter';
+import CourseFilters from './CourseFilters';
 
 const courses = [
   {
@@ -99,7 +101,8 @@ const courses = [
     requiredCoursesIds: [3, 12]
   }
 ];
-const locations = [
+
+const allLocations = [
   {
     id: 1,
     title: 'Vilnius'
@@ -123,8 +126,10 @@ const CourseRegistrationPage = () => {
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
-  const [selectedlocations, setSelectedLocations] = useState(locations.map(location => ({ ...location, selected: true })));
+  const [locations, setLocations] = useState(allLocations.map(location => ({ ...location, selected: true })));
   const [takenCourses, setTakenCourses] = useState([]);
+
+  allLocations.map(location => ({ ...location, selected: true }))
 
   return (
     <Container>
@@ -142,13 +147,17 @@ const CourseRegistrationPage = () => {
                 mobile={mobile} setMobile={setMobile}
               />
               <Box my={3}><Divider /></Box>
+              <Grid item xs={12}><Typography variant="h5" component="h2" color="primary">Filters</Typography></Grid>
+              <LocationFilter 
+                locations={locations}
+                setLocations={setLocations}
+              />
               <CourseFilters
                 courses={courses}
-                locations={locations}
+                allLocations={allLocations}
                 takenCourses={takenCourses}
-                selectedlocations={selectedlocations}
+                locations={locations}
                 setTakenCourses={setTakenCourses}
-                setSelectedLocations={setSelectedLocations}
               />
             </form>
           </Box>
