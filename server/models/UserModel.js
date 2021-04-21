@@ -5,7 +5,8 @@ const userModelSchema = new Mongoose.Schema({
   email: {
     type: String,
     required: true,
-    validate: { validator: validator.isEmail, message: 'Email is invalid' }
+    validate: { validator: validator.isEmail, message: 'Email is invalid' },
+    unique: true
   },
   password: {
     type: String,
