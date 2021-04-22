@@ -1,19 +1,20 @@
 const Mongoose = require('mongoose');
 const validator = require('validator');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const locationModelSchema = new Mongoose.Schema({
   title: {
+    unique: true,
     type: String,
-    min: [2, 'Location must contain at least 2 symbols'],
-    max: [32, 'Location can\'t have more than 32 letters'],
-    validate: {
-      validator: val => !validator.contains(val, /\d/ ),
-      message: 'Location must consists of letters'
-    },
-    required: true
+    validate: [
+      { validator: val => !/\d/.test(val), message: 'Location must consists of letters' },
+      { validator: val => validator.isLength(val, { min: 2, max: 32 }), message: 'Location must must contain from 2 to 32 symbols' },
+    ],
+    required: true,
   }
 }, { timestamps: true });
 
+locationModelSchema.plugin(uniqueValidator);
 const LocationModel = Mongoose.model('Location', locationModelSchema);
 
 module.exports = LocationModel;

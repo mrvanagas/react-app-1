@@ -1,27 +1,39 @@
 const Mongoose = require('mongoose');
+const validator = require('validator');
+const uniqueValidator = require('mongoose-unique-validator');
+const idValidator = require('mongoose-id-validator');
 
 const courseModelSchema = new Mongoose.Schema({
   title: {
     type: String,
-    min: [2, 'Location must contain at least 2 symbols'],
-    max: [64, 'Location can\'t have more than 64 letters'],
-    required: true
+    validate: {
+      validator: val => validator.isLength(val, { min: 2, max: 32 }),
+      message: 'Title must must contain from 2 to 32 symbols'
+    },
+    required: true,
+    unique: true
   },
   description: {
     type: String,
-    max: [400, 'Location can\'t have more than 400 letters']
+    validate: {
+      validator: val => validator.isLength(val, { max: 400 }),
+      message: 'Description must must contain max 400 symbols'
+    }
+
   },
   locations: {
-    type: [{ type : Mongoose.Schema.Types.ObjectId, ref: 'Location' }],
+    type: [{ type: Mongoose.Schema.Types.ObjectId, ref: 'Location' }],
     validate: {
-      validator: (val) => val.length >= 1 ,
+      validator: (val) => val.length >= 1,
       message: 'Course must have at least one location'
     },
     required: true
   },
-  requiredCourses: [{ type : Mongoose.Schema.Types.ObjectId, ref: 'Course' }]
+  requiredCourses: [{ type: Mongoose.Schema.Types.ObjectId, ref: 'Course' }]
 }, { timestamps: true });
 
+courseModelSchema.plugin(uniqueValidator);
+courseModelSchema.plugin(idValidator);
 const CourseModel = Mongoose.model('Course', courseModelSchema);
 
 module.exports = CourseModel;

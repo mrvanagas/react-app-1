@@ -1,5 +1,6 @@
 const Mongoose = require('mongoose');
 const validator = require('validator');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const userModelSchema = new Mongoose.Schema({
   email: {
@@ -29,16 +30,18 @@ const userModelSchema = new Mongoose.Schema({
       name: {
         type: String,
         required: true,
-        min: [2, 'Name must consist of at least 2 letters'],
-        max: [32, 'Name can\'t have more than 32 letters'],
-        validate: { validator: validator.isAlpha, message: 'Name must consist only letters' }
+        validate: [
+          { validator: val => !/\d/.test(val), message: 'Name must consists of letters' },
+          { validator: val => validator.isLength(val, { min: 2, max: 32 }), message: 'Name must must contain from 2 to 32 symbols' }
+        ]
       },
       surname: {
         type: String,
         required: true,
-        min: [2, 'Surname must consist of at least 2 letters'],
-        max: [32, 'Surname can\'t have more than 32 letters'],
-        validate: { validator: validator.isAlpha, message: 'Name must consist only letters' }
+        validate: [
+          { validator: val => !/\d/.test(val), message: 'Surname must consists of letters' },
+          { validator: val => validator.isLength(val, { min: 2, max: 32 }), message: 'Surname must must contain from 2 to 32 symbols' }
+        ]
       },
       mobile: {
         type: String,
@@ -50,6 +53,7 @@ const userModelSchema = new Mongoose.Schema({
   }
 }, { timestamps: true });
 
+userModelSchema.plugin(uniqueValidator);
 const UserModel = Mongoose.model('User', userModelSchema);
 
 module.exports = UserModel;

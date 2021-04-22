@@ -1,5 +1,6 @@
 const UserModel = require('../models/UserModel');
 const Mongoose = require('mongoose');
+const updateOptions = require('../config/updateOptions');
 
 module.exports.getUsers = async (req, res) => {
   try {
@@ -37,7 +38,7 @@ module.exports.updateUser = async (req, res) => {
   try {
     if (!Mongoose.Types.ObjectId.isValid(id))
       throw new Error(`User id is not valid`);
-    const updatedUser = await UserModel.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedUser = await UserModel.findOneAndUpdate({ _id: id }, req.body, updateOptions);
     if (updatedUser === null)
       throw new Error(`User with id '${id}' not found.`);
     res.status(200).json(updatedUser);
@@ -61,3 +62,4 @@ module.exports.deleteUser = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 }
+
