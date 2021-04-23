@@ -60,7 +60,7 @@ module.exports.deleteLocation = async (req, res) => {
       throw new Error(`Location with id '${id}' not found.`);
     // Surandame kursus, kurie turi trinamą lokaciją kaip priklausomybę
     const coursesDependentOnLocation = await CourseModel.find({
-      locations: { $in: [id] }
+      locations: id
     });
     // Surandame visus kursus, kurie turi trinamą lokaciją, kaip vienintelę lokaciją
     const courseDependentOnOnlyLocationToDelete = coursesDependentOnLocation
@@ -69,12 +69,12 @@ module.exports.deleteLocation = async (req, res) => {
     if (courseDependentOnOnlyLocationToDelete.length > 0) {
       const coursesTitles = courseDependentOnOnlyLocationToDelete.map(({ title }) => title);
       throw new Error(
-        `Location is a single dependency in locations: ${coursesTitles.join(', ')}.Please delete these courses first.`
+        `Location is a single dependency in courses: ${coursesTitles.join(', ')}.Please delete these courses first or remove location dependency.`
       );
     }
     // Jeigu nėra lokacijų, kurie turėtų trinamą lokaciją kaip vienintelę priklausomybę, pašaliname trinamą lokaciją iš kursų lokacijų masyvo
     await CourseModel.updateMany(
-      { locations: { $in: [id] } }, // Pagal ką ieškome
+      { locations: id }, // Pagal ką ieškome
       { $pull: { locations: id } } // Ką keičiame
     );
     // Ištriname lokaciją
