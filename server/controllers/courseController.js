@@ -1,4 +1,5 @@
 const CourseModel = require('../models/CourseModel');
+const CourseRequestModel = require('../models/CourseRequestModel');
 const Mongoose = require('mongoose');
 const updateOptions = require('../config/updateOptions');
 
@@ -44,12 +45,12 @@ module.exports.updateCourse = async (req, res) => {
       if (req.body.requiredCourses.includes(id))
         throw new Error(`Course can't require itself`);
       // Tikrinimas, kad nebūtų kryžminių reikalavimų ( x kursui reikia y kurso, o y kursui reikia x kurso)
-      const crossDependetCourses = await CourseModel.find({
+      const crossDependentCourses = await CourseModel.find({
         _id: { $in: req.body.requiredCourses }, // Tik tie kursai, kurių reikalaus šis kursas
         requiredCourses: id // Kursai, kurie turi šio kurso reikalavimą
       });
-      if (crossDependetCourses.length > 0) {
-        const titles = crossDependetCourses.map(({ title }) => title);
+      if (crossDependentCourses.length > 0) {
+        const titles = crossDependentCourses.map(({ title }) => title).join(', ');
         throw new Error(`Cross dependency error: ${titles} already have this course as a required course.`);
       }
     }
@@ -69,19 +70,39 @@ module.exports.deleteCourse = async (req, res) => {
     if (!Mongoose.Types.ObjectId.isValid(id))
       throw new Error('Course id is not valid');
 
-    // 1. Surasti visus kursus, kuriem reikalingas šis trinamas kursas
-    const dependentCourses = await CourseModel.find({
-      requiredCourses: id // Kursai, kurie turi šio kurso reikalavimą
+    await CourseModel.updateMany(
+      { requiredCourses: id },
+      { $pull: { requiredCourses: id } }
+    );
+    /*
+      1. Surasti visus <CourseRequest> kurie turi <Course> kaip priklausomybę
+      2. Jeigu <CourseRequest> turi daugiau nei vieną priklausomybę - pašalinti trinamą kursą iš 
+        <CourseRequest>.courses masyvo
+      3. Jeigu trinamas <Course> yra vinitelė <CourseRequest> priklausomybė, tuomet turi būti trinamas
+        VISAS <CourseRequest> įrašas
+    */
+
+    // 1. + 3. Triname tas užklausas, kurios kursą turi kaip vienintelę priklausomybę
+    await CourseRequestModel.deleteMany({
+      // Ką tokius trinsime?
+      courses: {
+        $size: 1, // Turi vieną elementą IR
+        $in: [id] // Elementas yra trinamo kurso id
+      }
     });
-    // 2. Ar yra tokių [1.] kursų?
-    if(dependentCourses.length > 0){
-      // taip: Pašalinti trinamą kursą iš kursų reikalavimų masyvų
-      await CourseModel.updateMany(
-        { requiredCourses: id }, // Pagal ką ieškome - kursai kurie <requiredCourse> masyve turi <id>
-        { $pull: { requiredCourses: id } } // Ką keičiame - ištriname iš <requiredCourse> masyvo <id>
-      );
-    }
-    // 3. Ištrinti kursą
+
+    // 1. + 2. Pašaliname trinamą kursą iš tų kursų užklausų, kurios turi trinamą kursą kaip priklausomybę,
+    // bet turi dar ir kitų kursų
+    await CourseRequestModel.updateMany(
+      // Ką tokius keisime?
+      {
+        courses: id, // tuos kurie courses masyve turi trinamo kurso id IR
+        'courses.1': { $exists: true }  // kursu užklausas kurios turi daugiau nei 1 elementą courses masyve
+      },
+      //  Kaip keisime?
+      { $pull: { courses: id } }
+    );
+
     const deletedCourse = await CourseModel.findByIdAndDelete(id);
     if (deletedCourse === null)
       throw new Error(`Course with id '${id}' not found.`);

@@ -37,8 +37,10 @@ module.exports.updateCourseRequest = async (req, res) => {
   const { id } = req.params;
   try {
     if (!Mongoose.Types.ObjectId.isValid(id))
-      throw new Error(`CourseRequest id is not valid`);
-    const updatedCourseRequest = await CourseRequestModel.findOneAndUpdate({ _id: id }, req.body, updateOptions);
+    throw new Error(`CourseRequest id is not valid`);
+    // Jeigu norėtumėte įgalinti vienos profileInfo savybės keitimą, reikėtų pirmiausia susirasti egzistuojantį elementą
+    // Tuomet pridėti jam viena ar kelias norimas keisti savybes ir tik tuomet daryti atnaujinimą
+    const updatedCourseRequest = await CourseRequestModel.findOneAndUpdate({ _id: id },  req.body, updateOptions);
     if (updatedCourseRequest === null)
       throw new Error(`CourseRequest with id '${id}' not found.`);
     res.status(200).json(updatedCourseRequest);
