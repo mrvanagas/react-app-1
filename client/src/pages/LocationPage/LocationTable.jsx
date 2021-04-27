@@ -11,6 +11,16 @@ import {
 } from '@material-ui/core';
 import { yyyymmdd } from '../../utils/dateTime';
 
+// Įgalinti trinimą, paspaudus Delete mygtuką
+/*
+  1. Sukurti actionTypes
+  2. Sukurti action, įvertinti duomenų atnaujinimą ir serverio klaidas
+  3. Importuoti react-redux bibliotekos įrankius komponente
+  4. Importuoti action'us komponente
+  5. Parašyti state'o kitimą reducer'yje pagal naujus actionTypes. 
+  6. Įgalinti action'o siuntimą
+*/
+
 const LocationTable = ({ locations }) => {
 
   const dataRows = locations

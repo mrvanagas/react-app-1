@@ -18,7 +18,7 @@ export const fetchLocations = () => async (dispatch) => {
   }
 }
 
-export const createLocation = (formData) => async (dispatch) => { // 11:00
+export const createLocation = (formData) => async (dispatch) => {
   try {
     await axios.post('http://localhost:5000/api/locations', formData);
     dispatch({ type: CREATE_LOCATION_SUCCESS });
