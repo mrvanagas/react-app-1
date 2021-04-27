@@ -1,18 +1,20 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'thunk';
+import thunk from 'redux-thunk';
 
-import locationReducer from './features/locations'
- 
+import locationsReducer from './features/locations';
+import coursesReducer from './features/courses';
+
 const middleware = [thunk];
 
 const reducer = combineReducers({
-    locations: locationReducer
-})
+  locations: locationsReducer,
+  courses: coursesReducer
+});
 
 const store = createStore(
-    reducer, 
-    composeWithDevTools(applyMiddleware(...middleware))
+  reducer,
+  composeWithDevTools(applyMiddleware(...middleware))
 );
 
 export default store;

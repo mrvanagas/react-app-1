@@ -30,6 +30,7 @@ const Navbar = () => {
               <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/calculator">Calculator</NavLink>
               <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/material-ui">Material-ui</NavLink>
               <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/course-registration">Course registration</NavLink>
+              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/manage-locations">Manage locations</NavLink>
             </Box>
             <Box>
               <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/login">Login</NavLink>

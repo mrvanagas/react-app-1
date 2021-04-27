@@ -13,6 +13,7 @@ import CourseRegistrationPage from './pages/CourseRegistrationPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import LocationPage from './pages/LocationPage';
 
 const App = () => {
 
@@ -32,6 +33,10 @@ const App = () => {
         <Route exact path="/course-registration">
           <CourseRegistrationPage />
         </Route>
+        <Route exact path="/manage-locations">
+          <LocationPage />
+        </Route>
+        {/* Authorization */}
         <Route exact path="/login">
           <LoginPage />
         </Route>

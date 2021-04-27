@@ -1,0 +1,34 @@
+useEffect tai 'hook' kuris skirtas pakeisti klasinio komponento metodams:
+  * componentDidMount
+  * componentDidUpdate
+  * componentWillUnmount
+
+Šis 'hook' iškviečiamas viduje funkcinio komponento
+  1. pirmu parametru jis priima funkciją kurią vykdyti
+    Jeigu norite vykdyti kodą, prieš komponentui išsitrinant, 
+      šios funkcijos viduje turite grąžinti funkciją ir kodą aprašyti viduje grąžinamosios funkcijos
+  2. antru parametru jis priima masyvą su nuorodomis į kitus kintamuosius
+
+Šis 'hook' vykdo pirmu parametru perduotą funkciją, jeigu keičiasi masyve esančios kintamųjų reikšmės
+
+
+componentDidMount alternatyva:
+
+  useEffect(() => {
+    ... componentDidMount logika ...
+  }, []);
+
+componentDidUpdate alternatyva:
+
+  useEffect(() => {
+    ... componentDidUpdate logika ...
+  }, [variableToWatch1, variableToWatch2, ... variableToWatchN]);
+
+componentWillUnmount alternatyva :
+
+  useEffect(() => {
+    ... componentDidMount logika ...
+    return () => {
+      ... componentWillUnmount logika...
+    }
+  }, []);
