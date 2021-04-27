@@ -9,22 +9,14 @@ import {
   Button,
   Box
 } from '@material-ui/core';
+import { yyyymmdd } from '../../utils/dateTime';
 
 const LocationTable = ({ locations }) => {
-  // ~~~~~~~~
-  const yyyymmdd = (dateString) => {
-    const date = new Date(dateString);
-    const monthValue = date.getMonth() + 1;
-    const monthString = monthValue < 10 ? '0' + monthValue : monthValue;
-    const dayValue = date.getDay();
-    const dayString = dayValue < 10 ? '0' + dayValue : monthValue;
-    return `${date.getFullYear()}-${monthString}-${dayString}`;
-  }
 
   const dataRows = locations
     .map(({ _id: id, title, createdAt, updatedAt }) =>
       <TableRow key={id}>
-        <TableCell component="th" scope="row">{title}</TableCell>
+        <TableCell>{title}</TableCell>
         <TableCell>{yyyymmdd(createdAt)}</TableCell>
         <TableCell>{yyyymmdd(updatedAt)}</TableCell>
         <TableCell>
@@ -35,7 +27,7 @@ const LocationTable = ({ locations }) => {
       </TableRow>)
 
   return (
-    <TableContainer component={({ children }) => <Paper elevation={4}>{children}</Paper>}>
+    <TableContainer component={({ children }) => <Paper elevation={6}>{children}</Paper>}>
       <Table>
         <TableHead>
           <TableRow>

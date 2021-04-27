@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Box,
@@ -15,6 +14,7 @@ import {
 } from '../../features/locations/selectors';
 import { fetchLocations } from '../../features/locations/actions';
 import LocationTable from './LocationTable';
+import LocationForm from './LocationForm';
 
 const LocationPage = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const LocationPage = () => {
               }
             </Grid>
             <Grid item xs={4}>
-              <Typography component="h2" variant="h5">I am form</Typography>
+              <LocationForm />
             </Grid>
           </Grid>
 
