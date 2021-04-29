@@ -1,0 +1,39 @@
+1. Parsisiųsti locations.editedLocation duomenis į formos komponentą iš Redux state
+
+2. Pagal tai ar egzistuoja locations.editedLocation duomenys, pritaikyti:
+   formos pavadinimą
+   mygtuko tekstą
+   mygtuko spalvą
+
+3. Pagal tai ar egzistuoja locations.editedLocation duomenys, 
+    įgalinti atitinkamą veiksmo siuntimą -> setup appropriate dispatch action (or action creator)
+      updateLocation - jeigu yra locations.editedLocation
+      createLocation - priešingu atveju -> createLocation logika jau atliktą.
+
+4. Jeigu yra updateLocation pavyko
+  išvalyti formą
+  atnaujinti visus duomenis
+  panaikinti locations.editedLocation duomenis (nustatyti null)
+
+5. Jeigu updateLocation nepavyko
+  Išsaugoti serverio gautą klaidą, ten pat kur ir kūrimo atveju. (createErrorMsg)
+
+------------------------- Namų darbas -------------------------
+
+  Perkelti klaidos rodymą virš formos laisvoje esančioje vietoje.
+
+6. Formos klaidos rodymo logiką naudoti bendrai: tiek kūrimo, tiek atnaujinimo atveju.
+  Gairės:
+    * pakeiskite klaidos būsenos pavadinimą: createErrorMsg -> locationSubmitErrorMsg
+    * pagal naujus pavadinimus priderinti reducer logiką
+    * pagal naujus pavadinimus priderinti action/actionCreators logiką
+    * pagal naujus pavadinimus priderinti selector funkcijos pavadinimus
+
+7. Duomenų išvalymo logiką, taip pat perrašyti bendrai, pakeičiant:
+    * actionType - veiksmo tipą
+      CREATE_LOCATION_RESET -> LOCATION_FORM_RESET
+    * būsenos pavadinimą: 
+      locationCreated -> locationSubmittedSuccessfully
+    * pagal naujus pavadinimus priderinti reducer logiką
+    * pagal naujus pavadinimus priderinti action/actionCreators logiką
+    * pagal naujus pavadinimus priderinti selector funkcijos pavadinimus

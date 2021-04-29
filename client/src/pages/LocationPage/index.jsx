@@ -7,6 +7,7 @@ import {
   CircularProgress,
   Grid
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import {
   getLocationsLoading,
   getLocationsErrorMsg,
@@ -29,27 +30,28 @@ const LocationPage = () => {
   return (
     <Container>
       <Box my={6}>
-        <Typography component="h1" variant="h4">Manage Locations</Typography>
-        <Box my={6}>
-          <Grid container spacing={4}>
-            <Grid item xs={8}>
-              {
-                loading
-                  ? <Box align="center"><CircularProgress size={120} /></Box>
-                  : !!errorMsg
-                    ? <Box align="center"><Typography component="p" variant="h5" color="error">{errorMsg}</Typography></Box>
-                    : locations.length > 0
-                      ? <LocationTable locations={locations} />
-                      : <Typography component="p" variant="h5" align="center">There are no locations at this moment</Typography>
-              }
-            </Grid>
-            <Grid item xs={4}>
-              <LocationForm />
-            </Grid>
+        <Grid container spacing={4}>
+          <Grid item xs={8}>
+            <Box display="flex" alignItems="center" justifyContent="space-between">
+              <Typography component="h1" variant="h4">Manage Locations</Typography>
+              {!!errorMsg ? <Alert severity="error">{errorMsg}</Alert> : null}
+            </Box>
+
           </Grid>
-
-        </Box>
-
+          <Grid item xs={4} />
+          <Grid item xs={8}>
+            {
+              loading
+                ? <Box align="center"><CircularProgress size={120} /></Box>
+                : locations.length > 0
+                  ? <LocationTable locations={locations} />
+                  : <Typography component="p" variant="h5" align="center">There are no locations at this moment</Typography>
+            }
+          </Grid>
+          <Grid item xs={4}>
+            <LocationForm />
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   )

@@ -10,31 +10,37 @@ import {
   Box
 } from '@material-ui/core';
 import { yyyymmdd } from '../../utils/dateTime';
-
-// Įgalinti trinimą, paspaudus Delete mygtuką
-/*
-  1. Sukurti actionTypes
-  2. Sukurti action, įvertinti duomenų atnaujinimą ir serverio klaidas
-  3. Importuoti react-redux bibliotekos įrankius komponente
-  4. Importuoti action'us komponente
-  5. Parašyti state'o kitimą reducer'yje pagal naujus actionTypes. 
-  6. Įgalinti action'o siuntimą
-*/
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteLocation, editLocation, cancelLocationEdit } from '../../features/locations/actions'
+import { getEditedLocation } from '../../features/locations/selectors'
 
 const LocationTable = ({ locations }) => {
-
-  const dataRows = locations
-    .map(({ _id: id, title, createdAt, updatedAt }) =>
+  const dispatch = useDispatch();
+  const editedLocation = useSelector(getEditedLocation);
+  const dataRows = locations.map(({ _id: id, title, createdAt, updatedAt }) => {
+    const isEdited = !!editedLocation && editedLocation.id === id;
+    return (
       <TableRow key={id}>
         <TableCell>{title}</TableCell>
         <TableCell>{yyyymmdd(createdAt)}</TableCell>
         <TableCell>{yyyymmdd(updatedAt)}</TableCell>
         <TableCell>
-          <Button variant="contained" color="primary">Update</Button>
+          <Button
+            variant={isEdited ? 'outlined' : 'contained'}
+            color="primary"
+            onClick={() => dispatch(isEdited ? cancelLocationEdit : editLocation({ id, title }))}
+          >{isEdited ? 'Cancel' : 'Update'}</Button>
           <Box mx={1} display="inline-block"></Box>
-          <Button variant="contained" color="secondary">Delete</Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={isEdited ? undefined : () => dispatch(deleteLocation(id))}
+            disabled={isEdited}
+          >Delete</Button>
         </TableCell>
-      </TableRow>)
+      </TableRow>
+    );
+  })
 
   return (
     <TableContainer component={({ children }) => <Paper elevation={6}>{children}</Paper>}>

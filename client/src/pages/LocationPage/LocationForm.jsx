@@ -5,11 +5,13 @@ import { TextField, Button, Paper, Typography, Box } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import {
   createLocation,
-  createLocationReset
+  createLocationReset,
+  updateLocation,
 } from '../../features/locations/actions';
 import {
   getLocationsCreated,
-  getLocationsCreateErrorMsg
+  getLocationsCreateErrorMsg,
+  getEditedLocation,
 } from '../../features/locations/selectors';
 
 const validationSchema = yup.object().shape({
@@ -24,10 +26,18 @@ const LocationForm = () => {
   const dispatch = useDispatch();
   const created = useSelector(getLocationsCreated);
   const createdError = useSelector(getLocationsCreateErrorMsg);
+  const editedLocation = useSelector(getEditedLocation);
+  const isEdited = !!editedLocation;
+  const formText = isEdited ? 'Update' : 'Create';
   const formik = useFormik({
-    initialValues: { title: '' },
+    enableReinitialize: true,
+    initialValues: { title: editedLocation?.title ?? '' },
     onSubmit: (values) => {
-      dispatch(createLocation(values));
+      if (isEdited) {
+        dispatch(updateLocation(editedLocation.id, values.title));
+      } else {
+        dispatch(createLocation(values));
+      }
     },
     validationSchema
   });
@@ -41,7 +51,7 @@ const LocationForm = () => {
   return (
     <Paper elevation={6}>
       <Box p={3}>
-        <Typography component="h2" variant="h5">Add Location</Typography>
+        <Typography component="h2" variant="h5">{formText} Location</Typography>
         <form onSubmit={formik.handleSubmit}>
           <Box my={3}>
             {!!createdError ? <Box my={3}><Alert severity="error">{createdError}</Alert></Box> : null}
@@ -58,11 +68,11 @@ const LocationForm = () => {
             />
           </Box>
           <Box align="center">
-            <Button color="primary" variant="contained" type="submit">Submit</Button>
+            <Button color={isEdited ? 'secondary' : 'primary'} variant="contained" type="submit">{formText}</Button>
           </Box>
         </form>
       </Box>
-    </Paper>
+    </Paper >
   )
 };
 
