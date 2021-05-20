@@ -25,15 +25,15 @@ const CourseFilters = ({ courses, allLocations, takenCourses, locations, setTake
     const courseAvailableAtSelectedLocations = locations
       .filter(({ selected }) => selected) // lokacijas kurių selected savybe yra true
       .map(({ id }) => id) // iš lokacijų masyvą su selected reikšmę 'true' perdaro tų lokacijų id masyvą
-      // [0, 2, 4]                    [0, 3]
+ 
       .find(locationId => course.locationsIds.includes(locationId)) !== undefined;
     // Grąžins true, tik tuomet jei pažymėti visi reikalaujami kursai
-    // [1, 2, 3, 4, 5, 6, 7]
+   
     const takenCoursesIds = takenCourses.map(({ id }) => id);
     const courseAvailableAfterTakenCourses = course.requiredCoursesIds === undefined
       ? true
       : course.requiredCoursesIds
-        //[1, 6]                      [1, 2, 3, 4, 5, 6, 7]
+ 
         .every(requiredCourseId => takenCoursesIds.includes(requiredCourseId));
 
     return courseAvailableAtSelectedLocations && courseAvailableAfterTakenCourses;
