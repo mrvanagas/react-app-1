@@ -4,9 +4,15 @@ import {
   makeStyles,
   Box,
   Button,
-  Divider
+  Divider,
+  CircularProgress
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  getAuthLoggedIn,
+  getAuthRouteAfterLoggin
+} from '../features/auth/selectors';
+import { Link, Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,12 +26,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AuthForm = ({ title, submitText, onSubmit, links, children }) => {
+const AuthForm = ({ title, submitText, onSubmit, links, children, loading }) => {
+  const loggedIn = useSelector(getAuthLoggedIn);
+  const redirectRoute = useSelector(getAuthRouteAfterLoggin);
+
   const classes = useStyles();
   const linkButtons = links.map(({ to, text }) => <Button key={to} color="primary"><Link to={to}>{text}</Link></Button>);
 
+  if (loggedIn) {
+    return <Redirect to={redirectRoute} />
+  }
   return (
-    <form className={classes.root} onSubmit={onSubmit}>
+    <form className={classes.root} onSubmit={loading ? null : onSubmit}>
       <Paper elevation={4}>
         <Box p={3} pb={2}>
           <Box mb={3}>
@@ -33,7 +45,13 @@ const AuthForm = ({ title, submitText, onSubmit, links, children }) => {
           </Box>
           {children}
           <Box mt={4}>
-            <Button variant="contained" color="primary" type="submit">{submitText}</Button>
+            <Button variant="contained" color="primary" type="submit" size="large" disabled={loading}>
+              {
+                loading
+                  ? <CircularProgress size={25} />
+                  : submitText
+              }
+            </Button>
           </Box>
           <Box mt={4} mb={2}>
             <Divider />

@@ -1,10 +1,15 @@
-import React from 'react';
-import { AppBar, Toolbar, Container, makeStyles, Box } from '@material-ui/core';
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Container, makeStyles, Box, Button, Menu, MenuItem, Typography } from '@material-ui/core';
 import { NavLink } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { getAuthRole, getAuthUserEmail } from '../features/auth/selectors';
 
 const useStyles = makeStyles(theme => ({
+  root: {
+    backgroundColor: theme.palette.primary.dark
+  },
   link: {
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.grey[100],
     textDecoration: 'none',
     fontSize: '1.25rem',
     marginRight: '1rem',
@@ -18,24 +23,60 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Navbar = () => {
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const email = useSelector(getAuthUserEmail);
+  const role = useSelector(getAuthRole);
   const classes = useStyles();
+
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={classes.root}>
       <Container>
         <Toolbar disableGutters>
           <Box display="flex" justifyContent="space-between" width="100%">
-            <Box>
+            <Box display="flex" alignItems="center">
               <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/">Home</NavLink>
               <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/counter">Counter</NavLink>
               <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/calculator">Calculator</NavLink>
               <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/material-ui">Material-ui</NavLink>
               <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/course-registration">Course registration</NavLink>
-              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/manage-locations">Manage locations</NavLink>
+              {
+                role !== null
+                  ?
+                  <>
+                    <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/manage-locations">Manage locations</NavLink>
+                  </>
+                  : null
+              }
             </Box>
-            <Box>
-              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/login">Login</NavLink>
-              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/register">Register</NavLink>
-              <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/forgot-password">Forgot password</NavLink>
+            <Box position="relative">
+              {
+                role === null
+                  ?
+                  <>
+                    <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/login">Login</NavLink>
+                    <NavLink className={classes.link} activeClassName={classes.linkActive} exact to="/register">Register</NavLink>
+                  </>
+                  :
+                  <>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    >
+                      {email}
+                    </Button>
+                    <Menu
+                      id="user-menu"
+                      keepMounted
+                      open={userMenuOpen}
+                      onClose={() => setUserMenuOpen(false)}
+                    >
+                      <MenuItem onClick={() => setUserMenuOpen(false)}>Profile</MenuItem>
+                      <MenuItem onClick={() => setUserMenuOpen(false)}>My account</MenuItem>
+                      <MenuItem onClick={() => setUserMenuOpen(false)}>Logout</MenuItem>
+                    </Menu>
+                  </>
+              }
             </Box>
           </Box>
 

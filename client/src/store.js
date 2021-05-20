@@ -3,13 +3,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import locationsReducer from './features/locations';
-import coursesReducer from './features/courses';
+import authReducer from './features/auth';
 
 const middleware = [thunk];
 
 const reducer = combineReducers({
   locations: locationsReducer,
-  courses: coursesReducer
+  auth: authReducer,
 });
 
 const store = createStore(

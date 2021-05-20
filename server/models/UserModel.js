@@ -11,13 +11,8 @@ const userModelSchema = new Mongoose.Schema({
   },
   password: {
     type: String,
-    validate: [
-      { validator: val => validator.isAlphanumeric(val, 'en-US'), message: 'Password must consist of numbers and en-US letters' },
-      {
-        validator: (val) => validator.isStrongPassword(val, { minSymbols: 0 }),
-        message: 'Password must consist of 8 symbols, one number, lowercase letter and upper case letter'
-      },
-    ],
+    minlength: 60,
+    maxlength: 60,
     required: true,
   },
   role: {

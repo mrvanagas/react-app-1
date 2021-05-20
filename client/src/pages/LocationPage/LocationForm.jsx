@@ -2,16 +2,14 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Paper, Typography, Box } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
 import {
   createLocation,
-  createLocationReset,
   updateLocation,
+  locationFormReset,
 } from '../../features/locations/actions';
 import {
-  getLocationsCreated,
-  getLocationsCreateErrorMsg,
   getEditedLocation,
+  getLocationsFormSubmitSuccess,
 } from '../../features/locations/selectors';
 
 const validationSchema = yup.object().shape({
@@ -24,9 +22,8 @@ const validationSchema = yup.object().shape({
 
 const LocationForm = () => {
   const dispatch = useDispatch();
-  const created = useSelector(getLocationsCreated);
-  const createdError = useSelector(getLocationsCreateErrorMsg);
   const editedLocation = useSelector(getEditedLocation);
+  const successfulSubmit = useSelector(getLocationsFormSubmitSuccess);
   const isEdited = !!editedLocation;
   const formText = isEdited ? 'Update' : 'Create';
   const formik = useFormik({
@@ -42,10 +39,10 @@ const LocationForm = () => {
     validationSchema
   });
 
-  if (created) {
-    dispatch(createLocationReset);
+  if (successfulSubmit) {
+    dispatch(locationFormReset);
     formik.resetForm();
-    formik.setTouched({ title: false });
+    formik.setTouched({ title: false })
   }
 
   return (
@@ -54,7 +51,6 @@ const LocationForm = () => {
         <Typography component="h2" variant="h5">{formText} Location</Typography>
         <form onSubmit={formik.handleSubmit}>
           <Box my={3}>
-            {!!createdError ? <Box my={3}><Alert severity="error">{createdError}</Alert></Box> : null}
             <TextField
               fullWidth
               name="title"

@@ -1,5 +1,6 @@
 const Mongoose = require('mongoose');
 const validator = require('validator');
+const idValidator = require('mongoose-id-validator');
 
 const courseRequestModelSchema = new Mongoose.Schema({
   personInfo: {
@@ -43,7 +44,7 @@ const courseRequestModelSchema = new Mongoose.Schema({
   }
 }, { timestamps: true });
 
-
+courseRequestModelSchema.plugin(idValidator);
 const CourseRequestModel = Mongoose.model('CourseRequest', courseRequestModelSchema);
 
 module.exports = CourseRequestModel;

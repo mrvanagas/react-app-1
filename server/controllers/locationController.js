@@ -58,18 +58,20 @@ module.exports.deleteLocation = async (req, res) => {
     const locationToDelete = await LocationModel.findById(id);
     if (locationToDelete === null)
       throw new Error(`Location with id '${id}' not found.`);
-    // Surandame kursus, kurie turi trinamą lokaciją kaip priklausomybę
-    const coursesDependentOnLocation = await CourseModel.find({
-      locations: id
-    });
     // Surandame visus kursus, kurie turi trinamą lokaciją, kaip vienintelę lokaciją
-    const courseDependentOnOnlyLocationToDelete = coursesDependentOnLocation
-      .filter(({ locations }) => locations.length === 1);
+    const courseDependentOnOnlyLocationToDelete = await CourseModel.find({ locations: { $in: [id], $size: 1 } });
+    // WHERE MONGO OPERATORIUS NEGALIMAS ANT ATLASSO ESAMOS VERSIJOS
+    // const coursesDependentOnLocation = await CourseModel.find({
+    //   $where: function () {
+    //     return this.locations.length === 1 && this.locations[0] === id;
+    //   }
+    // });
+
     // Jeigu yra kursų, kurie lokacijų masyve turi trinamają lokaciją, draudžiame trinimą
     if (courseDependentOnOnlyLocationToDelete.length > 0) {
-      const coursesTitles = courseDependentOnOnlyLocationToDelete.map(({ title }) => title);
+      const coursesTitles = courseDependentOnOnlyLocationToDelete.map(({ title }) => title).join(', ');
       throw new Error(
-        `Location is a single dependency in courses: ${coursesTitles.join(', ')}.Please delete these courses first or remove location dependency.`
+        `Location is a single dependency in courses: ${coursesTitles}.Please delete these courses first or remove location dependency.`
       );
     }
     // Jeigu nėra lokacijų, kurie turėtų trinamą lokaciją kaip vienintelę priklausomybę, pašaliname trinamą lokaciją iš kursų lokacijų masyvo

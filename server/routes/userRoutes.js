@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { authenticateByToken } = require('../middlewares/tokenAuth');
 const {
   getUsers,
   getUser,
@@ -9,15 +10,15 @@ const {
 
 const router = Router();
 
-router.get('/', getUsers);
+router.get('/', authenticateByToken, getUsers);
 
-router.get('/:id', getUser);
+router.get('/:id', authenticateByToken, getUser);
 
-router.post('/', createUser);
+router.post('/', authenticateByToken, createUser);
 
-router.put('/:id', updateUser);
+router.put('/:id', authenticateByToken, updateUser);
 
-router.delete('/:id', deleteUser);
+router.delete('/:id', authenticateByToken, deleteUser);
 
 module.exports = router;
 

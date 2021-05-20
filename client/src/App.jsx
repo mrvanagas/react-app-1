@@ -1,8 +1,12 @@
+import { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { getAuthRole } from './features/auth/selectors';
 
 import Navbar from './components/Navbar';
 import CounterPage from './pages/CounterPage';
@@ -12,10 +16,15 @@ import HomePage from './pages/HomePage';
 import CourseRegistrationPage from './pages/CourseRegistrationPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import LocationPage from './pages/LocationPage';
 
 const App = () => {
+  const dispatch = useDispatch();
+  const role = useSelector(getAuthRole);
+
+  useEffect(() => {
+    // dispatch(authenticate);
+  }, []);
 
   return (
     <Router>
@@ -34,17 +43,13 @@ const App = () => {
           <CourseRegistrationPage />
         </Route>
         <Route exact path="/manage-locations">
-          <LocationPage />
+          {role === 'STUDENT' ? <LocationPage /> : <Redirect to="/" />}
         </Route>
-        {/* Authorization */}
         <Route exact path="/login">
           <LoginPage />
         </Route>
         <Route exact path="/register">
           <RegisterPage />
-        </Route>
-        <Route exact path="/forgot-password">
-          <ForgotPasswordPage />
         </Route>
         <Route exact path="/">
           <HomePage />

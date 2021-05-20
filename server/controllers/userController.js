@@ -1,10 +1,13 @@
 const UserModel = require('../models/UserModel');
 const Mongoose = require('mongoose');
 const updateOptions = require('../config/updateOptions');
+const { hashPassword } = require('../helpers/hash');
+const { isMediumPassword } = require('../helpers/validate');
 
 module.exports.getUsers = async (req, res) => {
+  console.log(req.user);
   try {
-    const users = await UserModel.find({});
+    const users = await UserModel.find();
     res.status(200).json({ users });
   } catch ({ message }) {
     res.status(404).json({ message });
@@ -25,7 +28,13 @@ module.exports.getUser = async (req, res) => {
 
 module.exports.createUser = async (req, res) => {
   try {
-    const newUser = await UserModel.create(req.body);
+    const validationRes = isMediumPassword(req.body.password);
+    if (validationRes !== true) throw new Error(validationRes);
+    const hashedPassword = hashPassword(req.body.password)
+    const newUser = await UserModel.create({
+      ...req.body,
+      password: hashedPassword,
+    });
     res.status(200).json(newUser);
   }
   catch (error) {

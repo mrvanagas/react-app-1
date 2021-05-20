@@ -71,10 +71,7 @@ const Form = () => {
       title="Register"
       submitText="Register"
       onSubmit={formik.handleSubmit}
-      links={[
-        { to: '/login', text: 'Login' },
-        { to: '/forgot-password', text: 'Forgot password' },
-      ]}
+      links={[{ to: '/login', text: 'Login' }]}
     >
       <Box mb={3}>
         <TextField

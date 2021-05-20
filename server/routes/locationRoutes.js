@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { authenticateByToken } = require('../middlewares/tokenAuth');
 const {
   getLocations,
   getLocation,
@@ -9,7 +10,7 @@ const {
 
 const router = Router();
 
-router.get('/', getLocations);
+router.get('/', authenticateByToken, getLocations);
 
 router.get('/:id', getLocation);
 

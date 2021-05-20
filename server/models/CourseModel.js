@@ -19,8 +19,7 @@ const courseModelSchema = new Mongoose.Schema({
       validator: val => validator.isLength(val, { max: 400 }),
       message: 'Description must must contain max 400 symbols'
     }
-
-  },
+  }, 
   locations: {
     type: [{ type: Mongoose.Schema.Types.ObjectId, ref: 'Location' }],
     validate: {
@@ -34,6 +33,7 @@ const courseModelSchema = new Mongoose.Schema({
 
 courseModelSchema.plugin(uniqueValidator);
 courseModelSchema.plugin(idValidator);
+
 const CourseModel = Mongoose.model('Course', courseModelSchema);
 
 module.exports = CourseModel;
